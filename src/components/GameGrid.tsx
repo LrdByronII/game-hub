@@ -9,14 +9,14 @@ import GameCardContainer from './GameCardContainer';
 const GameGrid = () => {
     const { data, error, isLoading } = useGames();
     const skeletons = [0]
-    for (let i = 1; i < 15; i++) skeletons.push(i);
+    for (let i = 1; i < 20; i++) skeletons.push(i);
 
     return (
         <>
             {error && (<Text>{error}</Text>)}
             <SimpleGrid
                 columns={{ sm: 1, md: 2, lg: 3, xl: 5 }}
-                spacing={10}
+                spacing={5}
                 padding='10px'
             >
                 {isLoading && skeletons.map(skeleton => <GameCardContainer>
