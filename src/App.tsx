@@ -15,7 +15,7 @@ export interface GameQuery {
   platform: Platform | null;
   sortOrder: string;
   searchText: string;
-  selectedYear: number;
+  selectedYear: string;
 }
 
 function App() {
