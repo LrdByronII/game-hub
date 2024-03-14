@@ -8,12 +8,14 @@ import PlatformSelector from "./components/PlatformSelector";
 import { Platform } from "./hooks/useGames";
 import SortSelector from "./components/SortSelector";
 import GameHeading from "./components/GameStuff/GameHeading";
+import TimePeriodSelector from "./components/TimePeriodSelector";
 
 export interface GameQuery {
   genre: Genre | null;
   platform: Platform | null;
   sortOrder: string;
   searchText: string;
+  selectedYear: number;
 }
 
 function App() {
@@ -42,10 +44,13 @@ function App() {
           <Box paddingLeft={2}>
             <GameHeading gameQuery={gameQuery} />
             <Flex marginBottom={5} marginTop={4}>
-              <Box marginRight={5}>
-                <PlatformSelector selectedPlatform={gameQuery.platform} onSelectPlatform={platform => setGameQuery({ ...gameQuery, platform })} />
+              <PlatformSelector selectedPlatform={gameQuery.platform} onSelectPlatform={platform => setGameQuery({ ...gameQuery, platform })} />
+              <Box marginRight={5} marginLeft={5}>
+                <SortSelector sortOrder={gameQuery.sortOrder} onSelectSortOrder={(sortOrder) => setGameQuery({ ...gameQuery, sortOrder })} />
               </Box>
-              <SortSelector sortOrder={gameQuery.sortOrder} onSelectSortOrder={(sortOrder) => setGameQuery({ ...gameQuery, sortOrder })} />
+              <TimePeriodSelector selectedYear={gameQuery.selectedYear} onSelectYear={(selectedYear) => {
+                setGameQuery({...gameQuery, selectedYear});
+                }}/>
             </Flex>
           </Box>
           <GameGrid gameQuery={gameQuery} />
