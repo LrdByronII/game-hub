@@ -23,13 +23,10 @@ function App() {
 
   const queryMaker = (yearQuery: string) => {
     let allYears = gameQuery.selectedYear ? gameQuery.selectedYear : "";
-    console.log(allYears);
 
     if (!allYears?.includes(yearQuery)) {
-      console.log("add");
       allYears += yearQuery + ".";
     } else {
-      console.log("remove");
       allYears = allYears.replace(yearQuery + ".", "");
     }
     return allYears;
@@ -78,9 +75,7 @@ function App() {
                 onSelectYear={(yearQuery) => {
                   if (yearQuery) {
                     const query = queryMaker(yearQuery);
-                    console.log(query);
                     setGameQuery({ ...gameQuery, selectedYear: query });
-                    console.log("Selected Year: " + yearQuery);
                   }
                 }}
               />

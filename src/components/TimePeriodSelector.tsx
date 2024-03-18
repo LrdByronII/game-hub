@@ -22,13 +22,8 @@ const TimePeriodSelector = ({ onSelectYear, selectedYearProp }: Props) => {
     .split(".")
     .map((selectedYear) => years.find((year) => year.query === selectedYear));
 
-  console.log(
-    "Current selected years: " + JSON.stringify(currentSelectedYears)
-  );
-
   let YearsList = "";
   currentSelectedYears?.map((year) => (YearsList += year?.label + ", "));
-  console.log("Yearslist: " + YearsList);
 
   return (
     <Menu>
