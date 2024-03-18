@@ -21,45 +21,84 @@ export interface GameQuery {
 function App() {
   const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
+  const queryMaker = (yearQuery: string) => {
+    let allYears = gameQuery.selectedYear ? gameQuery.selectedYear : "";
+    console.log(allYears);
+
+    if (!allYears?.includes(yearQuery)) {
+      console.log("add");
+      allYears += yearQuery + ".";
+    } else {
+      console.log("remove");
+      allYears = allYears.replace(yearQuery + ".", "");
+    }
+    return allYears;
+  };
+
   return (
     <>
-      <Grid templateAreas={{
-        base: '"nav" "main"',
-        lg: `"nav nav" "aside main"`
-      }}
+      <Grid
+        templateAreas={{
+          base: '"nav" "main"',
+          lg: `"nav nav" "aside main"`,
+        }}
         templateColumns={{
-          base: '1fr',
-          lg: '200px 1fr'
+          base: "1fr",
+          lg: "200px 1fr",
         }}
       >
-        <GridItem area='nav'>
-          <NavBar onSearch={searchText => setGameQuery({ ...gameQuery, searchText })} />
+        <GridItem area="nav">
+          <NavBar
+            onSearch={(searchText) =>
+              setGameQuery({ ...gameQuery, searchText })
+            }
+          />
         </GridItem>
         <Show above="lg">
-          <GridItem area='aside' paddingX={5}>
-            <GenreList selectedGenre={gameQuery.genre} onSelectGenre={genre => setGameQuery({ ...gameQuery, genre })} />
+          <GridItem area="aside" paddingX={5}>
+            <GenreList
+              selectedGenre={gameQuery.genre}
+              onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genre })}
+            />
           </GridItem>
         </Show>
-        <GridItem area='main'>
+        <GridItem area="main">
           <Box paddingLeft={2}>
             <GameHeading gameQuery={gameQuery} />
             <Flex marginBottom={5} marginTop={4}>
-              <PlatformSelector selectedPlatform={gameQuery.platform} onSelectPlatform={platform => setGameQuery({ ...gameQuery, platform })} />
-              <Box marginRight={5}>
-              </Box>
-              <TimePeriodSelector selectedYear={gameQuery.selectedYear} onSelectYear={(selectedYear) => {
-                setGameQuery({...gameQuery, selectedYear});
-              }}/>
+              <PlatformSelector
+                selectedPlatform={gameQuery.platform}
+                onSelectPlatform={(platform) =>
+                  setGameQuery({ ...gameQuery, platform })
+                }
+              />
+              <Box marginRight={5}></Box>
+              <TimePeriodSelector
+                selectedYearProp={gameQuery.selectedYear}
+                onSelectYear={(yearQuery) => {
+                  if (yearQuery) {
+                    const query = queryMaker(yearQuery);
+                    console.log(query);
+                    setGameQuery({ ...gameQuery, selectedYear: query });
+                    console.log("Selected Year: " + yearQuery);
+                  }
+                }}
+              />
             </Flex>
           </Box>
           <Box marginLeft={2}>
-            <SortSelector sortOrder={gameQuery.sortOrder} onSelectSortOrder={(sortOrder) => setGameQuery({ ...gameQuery, sortOrder })} />
+            <SortSelector
+              sortOrder={gameQuery.sortOrder}
+              onSelectSortOrder={(sortOrder) =>
+                setGameQuery({ ...gameQuery, sortOrder })
+              }
+            />
           </Box>
           <GameGrid gameQuery={gameQuery} />
         </GridItem>
       </Grid>
     </>
-  )
+  );
 }
 
 export default App;
