@@ -1,4 +1,8 @@
-export default { count: 19, results: [
+export default { 
+    "count": 19, 
+    "next": null, 
+    "previous": null, 
+    "results": [
     {
         "id": 4,
         "name": "Action",
@@ -854,4 +858,5 @@ export default { count: 19, results: [
             }
         ]
     }
-] }
+] 
+}
