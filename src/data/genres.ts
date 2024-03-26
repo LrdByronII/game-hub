@@ -1,4 +1,4 @@
-export default [
+export default { count: 19, results: [
     {
         "id": 4,
         "name": "Action",
@@ -854,4 +854,4 @@ export default [
             }
         ]
     }
-]
+] }
