@@ -1,45 +1,37 @@
-import { Button, Menu, MenuButton, MenuList } from "@chakra-ui/react";
+import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
-import TimePeriodListItem from "./TimePeriodListItem";
-
-interface Props {
-  onSelectYear: (year: string) => void;
-  selectedYearProp: string;
-}
+import useYear from "../hooks/useYear";
+import useYears from "../hooks/useYears";
+import useGameQueryStore from "../store";
 
 export interface Year {
   label: string;
   query: string;
 }
 
-const TimePeriodSelector = ({ onSelectYear, selectedYearProp }: Props) => {
-  const years: Year[] = [];
-  for (let year = 2024; year >= 1990; year--)
-    years.push({ label: `${year}`, query: `${year}-01-01,${year}-12-31` });
+const TimePeriodSelector = () => {
+  const selectedYearQuery = useGameQueryStore(
+    (s) => s.gameQuery.selectedYearQuery
+  );
+  const setSelectedYearQuery = useGameQueryStore((s) => s.setSelectedYearQuery);
 
-  const currentSelectedYears = selectedYearProp
-    ?.substring(0, selectedYearProp.length - 1)
-    .split(".")
-    .map((selectedYear) => years.find((year) => year.query === selectedYear));
-
-  let YearsList = "";
-  currentSelectedYears?.map((year) => (YearsList += year?.label + ", "));
+  const years = useYears();
+  const selectedYear = useYear(selectedYearQuery);
 
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        From:{" "}
-        {selectedYearProp
-          ? YearsList.substring(0, YearsList.length - 2)
-          : "Any year"}
+        {"From: "}
+        {selectedYear?.label || "Any Year"}
       </MenuButton>
       <MenuList>
         {years.map((year) => (
-          <TimePeriodListItem
-            year={year}
-            onSelectYear={onSelectYear}
+          <MenuItem
+            onClick={() => setSelectedYearQuery(year.query)}
             key={year.query}
-          />
+          >
+            {year.label}
+          </MenuItem>
         ))}
       </MenuList>
     </Menu>
