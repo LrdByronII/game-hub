@@ -23,9 +23,9 @@ const GameCard = ({
 }: Props) => {
   return (
     <Card>
-      <Link to={`/games/${slug}`}>
-        <Image src={getCroppedImageUrl(background_image)} />
-        <CardBody>
+      <Image src={getCroppedImageUrl(background_image)} />
+      <CardBody>
+        <Link to={`/games/${slug}`}>
           <HStack marginBottom={3} justifyContent={"space-between"}>
             <PlatformIconList
               platforms={parent_platforms.map((p) => p.platform)}
@@ -33,12 +33,12 @@ const GameCard = ({
             <CriticScore score={metacritic} />
           </HStack>
           <Heading fontSize="2xl">{name}</Heading>
-          <HStack marginTop={2} justifyContent={"space-between"}>
-            <Emoji rating={rating_top} />
-            <Like />
-          </HStack>
-        </CardBody>
-      </Link>
+        </Link>
+        <HStack marginTop={2} justifyContent={"space-between"}>
+          <Emoji rating={rating_top} />
+          <Like />
+        </HStack>
+      </CardBody>
     </Card>
   );
 };
